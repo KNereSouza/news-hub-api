@@ -1,7 +1,10 @@
 import express from "express";
 import router from "./routes/routes.js";
 import { configDotenv } from "dotenv";
-import { authenticateToDatabase } from "./config/database.js";
+import {
+  authenticateToDatabase,
+  syncDatabaseModels,
+} from "./config/database.js";
 
 configDotenv();
 
@@ -16,3 +19,7 @@ app.listen(PORT, () => {
 });
 
 authenticateToDatabase();
+
+import User from "./models/User.js";
+
+syncDatabaseModels();

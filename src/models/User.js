@@ -1,5 +1,5 @@
-import { DataTypes, UUIDV4 } from "sequelize";
-import { sequelize } from "../config/database";
+import { DataTypes } from "sequelize";
+import { sequelize } from "../config/database.js";
 
 const User = sequelize.define(
   "User",
@@ -46,3 +46,5 @@ const User = sequelize.define(
     timestamps: true,
   }
 );
+
+export default User;
