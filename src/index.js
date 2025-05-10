@@ -1,6 +1,7 @@
 import express from "express";
 import router from "./routes/routes.js";
 import { configDotenv } from "dotenv";
+import { authenticateToDatabase } from "./config/database.js";
 
 configDotenv();
 
@@ -13,3 +14,5 @@ app.use(router);
 app.listen(PORT, () => {
   console.log(`Server it's alive at: http://localhost:${PORT}`);
 });
+
+authenticateToDatabase();
