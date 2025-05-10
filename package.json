@@ -1,0 +1,19 @@
+{
+  "name": "news-hub-api",
+  "version": "1.0.0",
+  "description": "NewsHub project, an API for a complete news management system.",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --watch ."
+  },
+  "author": "KNereSouza",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
