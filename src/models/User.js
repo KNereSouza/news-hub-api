@@ -38,6 +38,11 @@ const User = sequelize.define(
       type: DataTypes.ENUM("admin", "editor", "author"),
       defaultValue: "author",
     },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: false,
+    },
   },
   {
     sequelize,
