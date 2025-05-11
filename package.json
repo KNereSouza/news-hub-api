@@ -7,8 +7,16 @@
   "scripts": {
     "dev": "nodemon --watch ."
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KNereSouza/news-hub-api.git"
+  },
   "author": "KNereSouza",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KNereSouza/news-hub-api/issues"
+  },
+  "homepage": "https://github.com/KNereSouza/news-hub-api#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "dotenv": "^16.5.0",
