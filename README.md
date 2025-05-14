@@ -98,7 +98,7 @@ npm run dev
 
 The server will be running at: http://localhost:3000
 
-### Authentication
+### API Endpoints
 
 This project is currently in development. Some features may not be fully implemented or stable.
 
@@ -107,6 +107,48 @@ This project is currently in development. Some features may not be fully impleme
 
 - POST `/auth/login`
   Authenticate a user and return a JWT token
+
+### Authentication
+
+Authentication in the NewsHub API is handled using JSON Web Tokens (JWT). Users must authenticate to access protected routes.
+
+#### Login
+
+To authenticate, use the following endpoint:
+
+- **POST** `/auth/login`
+
+  Request body:
+
+  ```json
+  {
+    "email": "user@example.com",
+    "password": "your_password"
+  }
+  ```
+
+  Response:
+
+  ```json
+  {
+    "token": "your_jwt_token",
+    "user": {
+      "id": "ab9fd8aa-5e39-4e5c-a62c-f5194eb43d33",
+      "email": "user@example.com",
+      "role": "author"
+    }
+  }
+  ```
+
+#### Protected Routes
+
+To access protected routes, include the token in the `Authorization` header:
+
+```
+Authorization: Bearer your_jwt_token
+```
+
+If the token is invalid or expired, the server will respond with an appropriate error message.
 
 ## Project Structure
 
@@ -124,6 +166,7 @@ news-hub-api/
 ├── .env                  # Environment variables
 ├── .gitignore            # Files to ignore in Git
 ├── [package.json]        # Project metadata and dependencies
+├── LICENSE               # License file
 └── [README.md]           # Project documentation
 ```
 
@@ -139,4 +182,6 @@ Contributions are welcome! To contribute:
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. You are free to use, modify, and distribute this software under the terms of the license.
+
+For more details, see the [LICENSE](./LICENSE) file.
