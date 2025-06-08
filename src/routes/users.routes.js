@@ -8,6 +8,7 @@ import validateUserData from "../middlewares/ValidateUserDataMiddleware.js";
 
 // Controllers
 import CreateUserController from "../controllers/CreateUserController.js";
+import GetUsersController from "../controllers/GetUsersController.js";
 
 const usersRouter = Router();
 
@@ -20,5 +21,9 @@ usersRouter.post(
     await new CreateUserController().handle(request, response);
   }
 );
+
+usersRouter.get("/", async (request, response) => {
+  await new GetUsersController().handle(request, response);
+});
 
 export default usersRouter;
