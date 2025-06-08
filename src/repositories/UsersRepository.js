@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import { Sequelize, Op, fn, col } from "sequelize";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
@@ -30,6 +30,30 @@ export default class UsersRepository {
 
       console.error("Error creating user:", error);
       throw new Error(`Failed to create user: ${error.message}`);
+    }
+  }
+
+  async getUsers() {
+    try {
+      const users = await User.findAll({
+        attributes: [
+          [fn("CONCAT", col("firstName"), " ", col("lastName")), "fullName"],
+          "email",
+          "bio",
+          "role",
+          "isActive",
+        ],
+        where: {
+          role: {
+            [Op.ne]: "admin",
+          },
+        },
+        order: [["fullName", "ASC"]],
+      });
+      return users;
+    } catch (error) {
+      console.error("Error at get all users:", error);
+      throw new Error(`Failed to get users: ${error.message}`);
     }
   }
 }
