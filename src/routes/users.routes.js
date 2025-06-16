@@ -9,6 +9,7 @@ import validateUserData from "../middlewares/ValidateUserDataMiddleware.js";
 // Controllers
 import CreateUserController from "../controllers/CreateUserController.js";
 import GetUsersController from "../controllers/GetUsersController.js";
+import UpdateUserController from "../controllers/UpdateUserController.js";
 
 const usersRouter = Router();
 
@@ -25,5 +26,14 @@ usersRouter.post(
 usersRouter.get("/", async (request, response) => {
   await new GetUsersController().handle(request, response);
 });
+
+usersRouter.patch(
+  "/",
+  authenticateToken,
+  checkRoles(["admin"]),
+  async (request, response) => {
+    await new UpdateUserController().handle(request, response);
+  }
+);
 
 export default usersRouter;
