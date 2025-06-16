@@ -91,4 +91,29 @@ export default class UsersRepository {
       );
     }
   }
+
+  async deleteUser(id) {
+    try {
+      const user = await User.findByPk(id);
+
+      if (!user) {
+        throw new Error(
+          `User with ID ${id} not found. Please verify the user ID and try again.`
+        );
+      }
+
+      await User.destroy({
+        where: {
+          id: id,
+        },
+      });
+
+      return user.dataValues;
+    } catch (error) {
+      console.error("Error deleting user:", error.message);
+      throw new Error(
+        `Failed to delete user with ID '${id}': ${error.message}`
+      );
+    }
+  }
 }
