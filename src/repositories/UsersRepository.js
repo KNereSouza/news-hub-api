@@ -57,4 +57,38 @@ export default class UsersRepository {
       throw new Error(`Failed to get users: ${error.message}`);
     }
   }
+
+  async updateUser({ id, data }) {
+    try {
+      const user = await User.findByPk(id);
+
+      if (!user) {
+        throw new Error(
+          `User with ID ${id} not found. Please verify the user ID and try again.`
+        );
+      }
+
+      const originalData = user.toJSON();
+      await user.update(data);
+
+      const changedFields = {};
+      for (const key of Object.keys(data)) {
+        if (originalData[key] !== user[key]) {
+          changedFields[key] = user[key];
+        }
+      }
+
+      return {
+        id: user.id,
+        changedFields,
+        changedCount: Object.keys(changedFields).length,
+        success: Object.keys(changedFields).length > 0,
+      };
+    } catch (error) {
+      console.error("Error updating user:", error.message);
+      throw new Error(
+        `Failed to update user with ID '${id}': ${error.message}`
+      );
+    }
+  }
 }
