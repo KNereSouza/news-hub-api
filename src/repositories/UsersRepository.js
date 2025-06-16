@@ -37,6 +37,7 @@ export default class UsersRepository {
     try {
       const users = await User.findAll({
         attributes: [
+          "id",
           [fn("CONCAT", col("firstName"), " ", col("lastName")), "fullName"],
           "email",
           "bio",
