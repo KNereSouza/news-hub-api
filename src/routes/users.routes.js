@@ -10,6 +10,7 @@ import validateUserData from "../middlewares/ValidateUserDataMiddleware.js";
 import CreateUserController from "../controllers/CreateUserController.js";
 import GetUsersController from "../controllers/GetUsersController.js";
 import UpdateUserController from "../controllers/UpdateUserController.js";
+import DeleteUserController from "../controllers/DeleteUserController.js";
 
 const usersRouter = Router();
 
@@ -33,6 +34,15 @@ usersRouter.patch(
   checkRoles(["admin"]),
   async (request, response) => {
     await new UpdateUserController().handle(request, response);
+  }
+);
+
+usersRouter.delete(
+  "/:id",
+  authenticateToken,
+  checkRoles(["admin"]),
+  async (request, response) => {
+    await new DeleteUserController().handle(request, response);
   }
 );
 
