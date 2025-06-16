@@ -1,4 +1,3 @@
-import { Result } from "pg";
 import UpdateUserService from "../services/UpdateUserService.js";
 
 export default class UpdateUserController {
@@ -7,7 +6,7 @@ export default class UpdateUserController {
   }
 
   async handle(request, response) {
-    const id = request.query.id;
+    const id = request.params.id;
     const data = request.body;
 
     const validFields = [

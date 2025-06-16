@@ -28,7 +28,7 @@ usersRouter.get("/", async (request, response) => {
 });
 
 usersRouter.patch(
-  "/",
+  "/:id",
   authenticateToken,
   checkRoles(["admin"]),
   async (request, response) => {
