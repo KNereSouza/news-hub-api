@@ -5,8 +5,13 @@ export default class GetUsersService {
     this.usersRepository = usersRepository;
   }
 
-  async handle() {
+  async handle(userId) {
     try {
+      if (userId) {
+        const user = await this.usersRepository.getUsers(userId);
+        return user;
+      }
+
       const data = await this.usersRepository.getUsers();
       const users = data.map((object) => object.dataValues);
       return users;
