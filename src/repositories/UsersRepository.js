@@ -33,8 +33,29 @@ export default class UsersRepository {
     }
   }
 
-  async getUsers() {
+  async getUsers(userId) {
     try {
+      if (userId) {
+        const user = await User.findByPk(userId, {
+          attributes: [
+            "id",
+            [fn("CONCAT", col("firstName"), " ", col("lastName")), "fullName"],
+            "email",
+            "bio",
+            "role",
+            "isActive",
+          ],
+          where: {
+            role: {
+              [Op.ne]: "admin",
+            },
+          },
+          order: [["fullName", "ASC"]],
+        });
+
+        return user;
+      }
+
       const users = await User.findAll({
         attributes: [
           "id",
