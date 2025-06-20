@@ -102,11 +102,42 @@ The server will be running at: http://localhost:3000
 
 This project is currently in development. Some features may not be fully implemented or stable.
 
-- GET `/`
+- **GET** `/`
   Retrieve a welcome message to verify the server is running.
 
-- POST `/auth/login`
+#### Auth Routes
+
+- **POST** `/auth/login`
   Authenticate a user and return a JWT token
+
+#### Users Routes
+
+- **POST** `/users`  
+  Create a new user account (admin only).
+
+- **GET** `/users{/:id}`  
+  Retrieve a list of all users or a specific user.
+  (Use **GET** `/users` to retrieve all users or **GET** `/users/:id` to retrieve a specific user.)
+
+- **PATCH** `/users/:id`  
+  Update user details by user ID (admin only).
+
+- **DELETE** `/users/:id`  
+  Delete a user by user ID (admin only).
+
+#### Categories Routes
+
+- **POST** `/categories`
+  Create a new category (admin only).
+
+- **GET** `/categories`
+  Retrieve a list of all categories.
+
+- **PATCH** `/categories/:id`
+  Update category details by category ID (admin only).
+
+- **DELETE** `/categories/:id`
+  Delete a category by category ID (admin only).
 
 ### Authentication
 
