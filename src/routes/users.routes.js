@@ -24,7 +24,7 @@ usersRouter.post(
   }
 );
 
-usersRouter.get("/", async (request, response) => {
+usersRouter.get("/{:id}", async (request, response) => {
   await new GetUsersController().handle(request, response);
 });
 
