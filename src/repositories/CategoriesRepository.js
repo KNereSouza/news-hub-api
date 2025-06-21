@@ -86,4 +86,29 @@ export default class CategoriesRepository {
       );
     }
   }
+
+  async deleteCategory(categoryId) {
+    try {
+      const category = await Category.findByPk(categoryId);
+
+      if (!category) {
+        throw new Error(
+          `Category with ID ${categoryId} not found. Please verify the category ID and try again.`
+        );
+      }
+
+      await Category.destroy({
+        where: {
+          id: categoryId,
+        },
+      });
+
+      return category.dataValues;
+    } catch (error) {
+      console.error("Error deleting category:", error.message);
+      throw new Error(
+        `Failed to delete category with ID '${categoryId}':\n ${error.message}`
+      );
+    }
+  }
 }
