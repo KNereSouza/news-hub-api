@@ -52,4 +52,38 @@ export default class CategoriesRepository {
       throw new Error(`Failed to get categories: ${error.message}`);
     }
   }
+
+  async updateCategory({ categoryId, updateData }) {
+    try {
+      const category = await Category.findByPk(categoryId);
+
+      if (!category) {
+        throw new Error(
+          `Category with ID ${categoryId} not found. Please verify the category ID and try again.`
+        );
+      }
+
+      const originalData = category.toJSON();
+      await category.update(updateData);
+
+      const changedFields = {};
+      for (const key of Object.keys(updateData)) {
+        if (originalData[key] !== category[key]) {
+          changedFields[key] = category[key];
+        }
+      }
+
+      return {
+        id: category.id,
+        changedFields,
+        changedCount: Object.keys(changedFields).length,
+        success: Object.keys(changedFields).length > 0,
+      };
+    } catch (error) {
+      console.error("Error updating category:", error.message);
+      throw new Error(
+        `Failed to update category with ID '${categoryId}': ${error.message}`
+      );
+    }
+  }
 }
