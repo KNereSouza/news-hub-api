@@ -8,6 +8,7 @@ import checkRoles from "../middlewares/CheckRolesMiddleware.js";
 
 // Controllers
 import CreateCategoryController from "../controllers/CreateCategoryController.js";
+import GetCategoriesController from "../controllers/GetCategoriesController.js";
 
 const categoriesRouter = Router();
 
@@ -20,5 +21,9 @@ categoriesRouter.post(
     await new CreateCategoryController().handle(request, response);
   }
 );
+
+categoriesRouter.get("/{:slug}", async (request, response) => {
+  await new GetCategoriesController().handle(request, response);
+});
 
 export default categoriesRouter;
