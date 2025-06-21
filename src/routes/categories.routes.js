@@ -9,6 +9,7 @@ import checkRoles from "../middlewares/CheckRolesMiddleware.js";
 // Controllers
 import CreateCategoryController from "../controllers/CreateCategoryController.js";
 import GetCategoriesController from "../controllers/GetCategoriesController.js";
+import UpdateCategoryController from "../controllers/UpdateCategoryController.js";
 
 const categoriesRouter = Router();
 
@@ -25,5 +26,14 @@ categoriesRouter.post(
 categoriesRouter.get("/{:slug}", async (request, response) => {
   await new GetCategoriesController().handle(request, response);
 });
+
+categoriesRouter.patch(
+  "/:id",
+  authenticateToken,
+  checkRoles(["admin"]),
+  async (request, response) => {
+    await new UpdateCategoryController().handle(request, response);
+  }
+);
 
 export default categoriesRouter;
