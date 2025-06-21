@@ -10,6 +10,7 @@ import checkRoles from "../middlewares/CheckRolesMiddleware.js";
 import CreateCategoryController from "../controllers/CreateCategoryController.js";
 import GetCategoriesController from "../controllers/GetCategoriesController.js";
 import UpdateCategoryController from "../controllers/UpdateCategoryController.js";
+import DeleteCategoryController from "../controllers/DeleteCategoryController.js";
 
 const categoriesRouter = Router();
 
@@ -33,6 +34,15 @@ categoriesRouter.patch(
   checkRoles(["admin"]),
   async (request, response) => {
     await new UpdateCategoryController().handle(request, response);
+  }
+);
+
+categoriesRouter.delete(
+  "/:id",
+  authenticateToken,
+  checkRoles(["admin"]),
+  async (request, response) => {
+    await new DeleteCategoryController().handle(request, response);
   }
 );
 
