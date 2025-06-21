@@ -1,5 +1,5 @@
 import Category from "../models/Category.js";
-import { Sequelize } from "sequelize";
+import { Op, Sequelize } from "sequelize";
 import generateSlug from "../utils/generateSlug.js";
 
 export default class CategoriesRepository {
@@ -26,6 +26,30 @@ export default class CategoriesRepository {
 
       console.error("Error creating category:", error);
       throw new Error(`Failed to create category: ${error.message}`);
+    }
+  }
+
+  async getCategories(slug) {
+    try {
+      if (!slug) {
+        const categories = await Category.findAll({
+          order: [["name", "ASC"]],
+        });
+        return categories;
+      }
+
+      const category = await Category.findOne({
+        where: {
+          slug: {
+            [Op.eq]: slug,
+          },
+        },
+      });
+
+      return category;
+    } catch (error) {
+      console.error("Error at get categories:", error);
+      throw new Error(`Failed to get categories: ${error.message}`);
     }
   }
 }
