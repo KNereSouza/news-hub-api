@@ -13,12 +13,19 @@ export default class CreateArticleController {
       return response.status(201).json(article);
     } catch (error) {
       if (error.message.includes("not found")) {
-        const missing = error.message.split(" ");
+        const missing = error.message.split(" ")[0];
         const id =
           missing.toLowerCase() === "author" ? body.authorId : body.categoryId;
 
         return response.status(404).json({
           message: `${missing} with ID '${id}' not found. Please verify the ${missing.toLowerCase()} ID and try again.`,
+        });
+      }
+
+      if (error.message.includes("slug")) {
+        return response.status(400).json({
+          message:
+            "An article with the provided slug already exists. Please use a different title",
         });
       }
 
