@@ -4,6 +4,7 @@ import { Router } from "express";
 import authRouter from "./auth.routes.js";
 import usersRouter from "./users.routes.js";
 import categoriesRouter from "./categories.routes.js";
+import articlesRouter from "./articles.routes.js";
 
 const router = Router();
 
@@ -15,5 +16,6 @@ router.get("/", (request, response) => {
 router.use("/auth", authRouter);
 router.use("/users", usersRouter);
 router.use("/categories", categoriesRouter);
+router.use("/articles", articlesRouter);
 
 export default router;
