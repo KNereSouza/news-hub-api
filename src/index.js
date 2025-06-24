@@ -20,7 +20,6 @@ app.listen(PORT, () => {
 
 authenticateToDatabase();
 
-import User from "./models/User.js";
-import Category from "./models/Category.js";
+import { Article, Category, User } from "./models/index.js";
 
 syncDatabaseModels();
