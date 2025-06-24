@@ -35,7 +35,7 @@ const Article = sequelize.define(
       },
     },
     status: {
-      type: DataTypes.ENUM("draft", "published", "archived"),
+      type: DataTypes.ENUM("draft", "pending", "published", "archived"),
       defaultValue: "draft",
     },
     publishedAt: {
