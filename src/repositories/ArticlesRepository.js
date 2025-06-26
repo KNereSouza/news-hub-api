@@ -74,4 +74,38 @@ export default class ArticlesRepository {
       throw new Error(`Failed to get articles: ${error.message}`);
     }
   }
+
+  async updateArticle({ articleId, updateData }) {
+    try {
+      const article = await Article.findByPk(articleId);
+
+      if (!article) {
+        throw new Error(
+          `Article with ID ${articleId} not found. Please verify the article ID and try again.`
+        );
+      }
+
+      const originalData = article.toJSON();
+      await article.update(updateData);
+
+      const changedFields = {};
+      for (const key of Object.keys(updateData)) {
+        if (originalData[key] !== article[key]) {
+          changedFields[key] = article[key];
+        }
+      }
+
+      return {
+        id: article.id,
+        changedFields,
+        changedCount: Object.keys(changedFields).length,
+        success: Object.keys(changedFields).length > 0,
+      };
+    } catch (error) {
+      console.error("Error updating article:", error.message);
+      throw new Error(
+        `Failed to update article with ID '${articleId}': ${error.message}`
+      );
+    }
+  }
 }
