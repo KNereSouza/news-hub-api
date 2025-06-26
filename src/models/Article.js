@@ -51,8 +51,9 @@ const Article = sequelize.define(
 );
 
 Article.beforeValidate((article, options) => {
-  const slug = generateSlug(article.title);
-  article.slug = slug;
+  if (article.title) {
+    article.slug = generateSlug(article.title);
+  }
 });
 
 Article.beforeSave((article) => {
