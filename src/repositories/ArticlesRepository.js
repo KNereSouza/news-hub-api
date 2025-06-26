@@ -1,4 +1,5 @@
 import Article from "../models/Article.js";
+import Category from "../models/Category.js";
 import generateSlug from "../utils/generateSlug.js";
 
 export default class ArticlesRepository {
@@ -42,6 +43,35 @@ export default class ArticlesRepository {
 
       console.error("Error at creating a new article:", error);
       throw new Error(`Failed to create article: ${error.message}`);
+    }
+  }
+
+  async getArticles({ slug, authorId, categorySlug } = {}) {
+    const where = { status: "published" };
+    const include = [];
+
+    if (slug) where.slug = slug;
+    if (authorId) where.authorId = authorId;
+    if (categorySlug) {
+      include.push({
+        model: Category,
+        where: {
+          slug: categorySlug,
+        },
+      });
+    }
+
+    try {
+      const articles = await Article.findAll({
+        where,
+        order: [["publishedAt", "DESC"]],
+        include,
+      });
+
+      return articles;
+    } catch (error) {
+      console.error("Error at get articles:", error);
+      throw new Error(`Failed to get articles: ${error.message}`);
     }
   }
 }
