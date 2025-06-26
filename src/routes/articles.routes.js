@@ -11,6 +11,7 @@ import isOwner from "../middlewares/IsOwnerMiddleware.js";
 import CreateArticleController from "../controllers/CreateArticleController.js";
 import GetArticlesController from "../controllers/GetArticlesController.js";
 import UpdateArticlesController from "../controllers/UpdateArticleController.js";
+import DeleteArticleController from "../controllers/DeleteArticleController.js";
 
 const articlesRouter = Router();
 
@@ -38,6 +39,15 @@ articlesRouter.patch(
   isOwner(["admin", "editor"]),
   async (request, response) => {
     await new UpdateArticlesController().handle(request, response);
+  }
+);
+
+articlesRouter.delete(
+  "/:id",
+  authenticateToken,
+  checkRoles(["admin"]),
+  async (request, response) => {
+    await new DeleteArticleController().handle(request, response);
   }
 );
 
