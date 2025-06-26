@@ -108,4 +108,29 @@ export default class ArticlesRepository {
       );
     }
   }
+
+  async deleteArticle(articleId) {
+    try {
+      const article = await Article.findByPk(articleId);
+
+      if (!article) {
+        throw new Error(
+          `Article with ID ${articleId} not found. Please verify the article ID and try again.`
+        );
+      }
+
+      await Article.destroy({
+        where: {
+          id: articleId,
+        },
+      });
+
+      return article.dataValues;
+    } catch (error) {
+      console.error("Error deleting article:", error.message);
+      throw new Error(
+        `Failed to delete article with ID '${articleId}':\n ${error.message}`
+      );
+    }
+  }
 }
