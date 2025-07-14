@@ -7,6 +7,9 @@ export default class GetArticlesController {
 
   async handle(request, response) {
     const queryData = {};
+    const adminAccess =
+      request.user &&
+      (request.user.role === "admin" || request.user.role === "editor");
 
     if (typeof request.params.slug === "string") {
       queryData.slug = request.params.slug;
@@ -21,7 +24,10 @@ export default class GetArticlesController {
     }
 
     try {
-      const articles = await this.getArticlesService.handle(queryData);
+      const articles = await this.getArticlesService.handle(
+        adminAccess,
+        queryData
+      );
 
       if (articles.length === 0) {
         return response.status(404).json({

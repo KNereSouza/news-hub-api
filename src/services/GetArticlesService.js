@@ -5,9 +5,12 @@ export default class GetArticlesService {
     this.articlesRepository = articlesRepository;
   }
 
-  async handle(queryData = {}) {
+  async handle(adminAccess, queryData = {}) {
     try {
-      const data = await this.articlesRepository.getArticles(queryData);
+      const data = await this.articlesRepository.getArticles(
+        adminAccess,
+        queryData
+      );
       const articles = data.map((item) => item.dataValues);
 
       return articles;

@@ -4,6 +4,7 @@ import { Router } from "express";
 // Middlewares
 import validateArticleData from "../middlewares/ValidateArticleDataMiddleware.js";
 import authenticateToken from "../middlewares/AuthMiddleware.js";
+import optionalAuthMiddleware from "../middlewares/OptionalAuthMiddleware.js";
 import checkRoles from "../middlewares/CheckRolesMiddleware.js";
 import isOwner from "../middlewares/IsOwnerMiddleware.js";
 
@@ -25,11 +26,15 @@ articlesRouter.post(
   }
 );
 
-articlesRouter.get("/:slug", async (request, response) => {
-  await new GetArticlesController().handle(request, response);
-});
+articlesRouter.get(
+  "/:slug",
+  optionalAuthMiddleware,
+  async (request, response) => {
+    await new GetArticlesController().handle(request, response);
+  }
+);
 
-articlesRouter.get("/", async (request, response) => {
+articlesRouter.get("/", optionalAuthMiddleware, async (request, response) => {
   await new GetArticlesController().handle(request, response);
 });
 

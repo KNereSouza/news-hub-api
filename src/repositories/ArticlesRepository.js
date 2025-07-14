@@ -46,8 +46,11 @@ export default class ArticlesRepository {
     }
   }
 
-  async getArticles({ slug, authorId, categorySlug } = {}) {
-    const where = { status: "published" };
+  async getArticles(
+    adminAccess = false,
+    { slug, authorId, categorySlug } = {}
+  ) {
+    const where = adminAccess ? {} : { status: "published" };
     const include = [];
 
     if (slug) where.slug = slug;
